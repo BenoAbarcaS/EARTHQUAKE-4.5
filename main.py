@@ -31,7 +31,7 @@ async def on_ready():
 
 # Función para obtener datos de los terremotos en Chile y enviarlos como mensaje en Discord
 async def send_earthquake_data(channel_id):
-    url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
+    url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_hour.geojson"
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
