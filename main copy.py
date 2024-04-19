@@ -72,9 +72,10 @@ async def send_earthquake_alerts():
                     driver = webdriver.Chrome(options=options)
                     
                    # Abrir Google Maps y obtener la captura de pantalla
-                    google_maps_link = f"http://maps.google.com/maps?t=k&q=loc:{latitude}+{longitude}"  # Agregar el parámetro para mostrar la vista de satélite
+                    free_maps_link = f"https://www.openstreetmap.org/search?query={latitude}%2C-{longitude}#map=14"
+                    google_maps_link = f"https://www.google.com/maps/search/?api=1&query={latitude},{longitude}"
                     driver.get(google_maps_link)
-                    time.sleep(4)
+                    time.sleep(3)
                     driver.execute_script("document.getElementsByClassName('widget-scene-canvas')[0].style.transform = 'translateX(20%)'")
                     time.sleep(1)
                     driver.save_screenshot("map_screenshot.png")
