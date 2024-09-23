@@ -75,7 +75,7 @@ async def send_earthquake_alerts():
                     google_maps_link = f"http://maps.google.com/maps?t=k&q=loc:{latitude}+{longitude}"  # Agregar el parámetro para mostrar la vista de satélite
                     driver.get(google_maps_link)
                     time.sleep(4)
-                    driver.execute_script("document.getElementsByClassName('widget-scene-canvas')[0].style.transform = 'translateX(20%)'")
+                    driver.execute_script("document.getElementsByClassName('widget-scene-canvas')[0].style.transform = 'translateX(0%)'")
                     time.sleep(1)
                     driver.save_screenshot("map_screenshot.png")
                     
@@ -113,7 +113,7 @@ async def eqmag(ctx, *, eqmag_filter: str = None):
     else:
         await ctx.send(f"Filtro de eqmag actualizado para este servidor: {eqmag_filter}")
     c.execute("UPDATE server_config SET eqmag=? WHERE server_id=?", (eqmag_filter, server_id))
-    conn.commit()   
+    conn.commit() 
 
 # Tarea programada para revisar el JSON cada 10 segundos
 @tasks.loop(seconds=10)
