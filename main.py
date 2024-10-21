@@ -1,12 +1,14 @@
-from config import TOKEN
 import discord
 from discord.ext import commands, tasks
 from selenium import webdriver
 import requests
-import json
 import sqlite3
 import time
 import os
+import webserver
+
+# Obtener el token desde las variables de entorno
+TOKEN = os.getenv('TOKEN')
 
 # Inicializar el bot
 intents = discord.Intents.all()
@@ -135,5 +137,7 @@ async def update_server_config():
         c.execute("INSERT OR IGNORE INTO server_config (server_id, channel_id) VALUES (?, ?)", (server_id, channel_id))
     conn.commit()
 
+# mantener el servidor
+webserver.keep_alive()
 # Inicializar el bot
 bot.run(TOKEN)
