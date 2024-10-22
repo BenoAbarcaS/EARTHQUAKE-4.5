@@ -14,7 +14,7 @@ cffi==1.15.1
 charset-normalizer==2.1.1
 click==8.1.7
 colorama==0.4.5
-cx-Freeze==6.13.1
+cx-Freeze==6.13.2
 dill==0.3.5.1
 discord==2.0.0
 discord.py==2.2.3
