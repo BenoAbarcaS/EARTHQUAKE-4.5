@@ -36,7 +36,6 @@ try:
 except sqlite3.Error as e:
     print("Error al crear la tabla:", e)
 
-
 # Función para obtener el JSON de la URL
 def get_earthquake_data():
     response = requests.get("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson")
@@ -68,12 +67,13 @@ async def send_earthquake_alerts():
                 if (not eqlast or title != eqlast) and \
                    (not eqplace or eqplace.lower() in title.lower()) and \
                    (not eqmag or (eqmag.isdigit() and float(mag) >= float(eqmag))):
+                    
                     # Crear una instancia del navegador
                     options = webdriver.ChromeOptions()
                     options.add_argument('headless')  # Para que no se abra la ventana del navegador
-                    driver = webdriver.Chrome(options=options)
+                    driver = webdriver.Chrome(options=options, executable_path='/usr/local/bin/chromedriver')  # Especifica la ruta de ChromeDriver
                     
-                   # Abrir Google Maps y obtener la captura de pantalla
+                    # Abrir Google Maps y obtener la captura de pantalla
                     google_maps_link = f"http://maps.google.com/maps?t=k&q=loc:{latitude}+{longitude}"  # Agregar el parámetro para mostrar la vista de satélite
                     driver.get(google_maps_link)
                     time.sleep(4)
@@ -91,7 +91,9 @@ async def send_earthquake_alerts():
                     # Actualizar el último título enviado (eqlast) en la base de datos
                     c.execute("UPDATE server_config SET eqlast=? WHERE server_id=?", (title, server_id))
                     conn.commit()
-
+                    
+                    # Cerrar el navegador después de tomar la captura de pantalla
+                    driver.quit()  # Asegúrate de cerrar el navegador
 
 # Comando para establecer el filtro de eqplace de un servidor
 @bot.command()
