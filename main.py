@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands, tasks
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService  # Importar el servicio de Chrome
+from webdriver_manager.chrome import ChromeDriverManager  # Importar el administrador de ChromeDriver
 import requests
 import sqlite3
 import time
@@ -68,10 +70,9 @@ async def send_earthquake_alerts():
                    (not eqplace or eqplace.lower() in title.lower()) and \
                    (not eqmag or (eqmag.isdigit() and float(mag) >= float(eqmag))):
                     
-                    # Crear una instancia del navegador
-                    options = webdriver.ChromeOptions()
-                    options.add_argument('headless')  # Para que no se abra la ventana del navegador
-                    driver = webdriver.Chrome(options=options, executable_path='/usr/local/bin/chromedriver')  # Especifica la ruta de ChromeDriver
+                    # Crear una instancia del servicio de ChromeDriver
+                    service = ChromeService(executable_path='/usr/local/bin/chromedriver')  # Especifica la ruta de ChromeDriver
+                    driver = webdriver.Chrome(service=service)  # Usar el servicio aquí
                     
                     # Abrir Google Maps y obtener la captura de pantalla
                     google_maps_link = f"http://maps.google.com/maps?t=k&q=loc:{latitude}+{longitude}"  # Agregar el parámetro para mostrar la vista de satélite
