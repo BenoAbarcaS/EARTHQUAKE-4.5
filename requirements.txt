@@ -1,5 +1,5 @@
 discord.py==2.0.1
 selenium==4.10.0
-requests==2.31.0
+requests==2.32.2
 Flask==2.3.3
 webdriver-manager==3.8.6
